@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="app">
+    <h1>List</h1>
+    <ul>
+        <li>{{text}}</li>
+    </ul>
+    <button>change</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="bundle.js"></script>
+<script>
+
+    let vm = new Vue({
+        el: '#app',
+        computed: {
+            text(){
+                return this.bag.get('text')
+            }
+        },
+        data: {
+            bag: new Storex('bag')
+        }
+    });
+
+    Storex.pipe('testPipe', (val, oldVal) => {
+        val = val * 4;
+        return val
+    });
+
+
+    new Storex('bag').set('text', 'artur', {pipes: ['testPipe', 'testPipe2'], readonly: true});
+
+
+</script>
+
+</body>
+</html>
